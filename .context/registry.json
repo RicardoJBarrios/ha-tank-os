@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "resolver_version": "1.0.0",
+  "authority_order": ["canonical", "derived", "historical", "local"],
+  "mandatory_paths": [
+    "AGENTS.md",
+    "docs/vision-y-requisitos.md",
+    "docs/metodologia-modelado-sdd.md",
+    "docs/agent-tooling.md"
+  ],
+  "excluded_path_fragments": [
+    ".git",
+    ".venv",
+    "node_modules",
+    ".docker/ha/config/.storage",
+    ".context/generated",
+    "artifacts"
+  ],
+  "artifacts": [
+    {
+      "id": "project-instructions",
+      "path": "AGENTS.md",
+      "kind": "instructions",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["mandatory", "governance"]
+    },
+    {
+      "id": "product-vision",
+      "path": "docs/vision-y-requisitos.md",
+      "kind": "requirements",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["mandatory", "product"]
+    },
+    {
+      "id": "sdd-methodology",
+      "path": "docs/metodologia-modelado-sdd.md",
+      "kind": "methodology",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["mandatory", "workflow"]
+    },
+    {
+      "id": "agent-tooling",
+      "path": "docs/agent-tooling.md",
+      "kind": "tooling",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["mandatory", "agents"]
+    },
+    {
+      "id": "github-flow",
+      "path": "docs/github-flow.md",
+      "kind": "workflow",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["git", "workflow"]
+    },
+    {
+      "id": "ha-compatibility",
+      "path": "docs/home-assistant-compatibility.md",
+      "kind": "compatibility",
+      "authority": "canonical",
+      "freshness": "tracked",
+      "tags": ["home-assistant", "testing"]
+    },
+    {
+      "id": "context-tooling-skill",
+      "path": ".agents/skills/openspec-apply-change/SKILL.md",
+      "kind": "agent-skill",
+      "authority": "derived",
+      "freshness": "tracked",
+      "tags": ["agents", "openspec"]
+    }
+  ],
+  "links": [
+    {
+      "from": "project-instructions",
+      "to": "product-vision",
+      "relation": "governs"
+    },
+    {
+      "from": "project-instructions",
+      "to": "sdd-methodology",
+      "relation": "governs"
+    },
+    {
+      "from": "project-instructions",
+      "to": "agent-tooling",
+      "relation": "governs"
+    },
+    {
+      "from": "agent-tooling",
+      "to": "ha-compatibility",
+      "relation": "references"
+    },
+    {
+      "from": "agent-tooling",
+      "to": "github-flow",
+      "relation": "references"
+    },
+    {
+      "from": "agent-tooling",
+      "to": "context-tooling-skill",
+      "relation": "references"
+    }
+  ]
+}

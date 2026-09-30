@@ -1,0 +1,16 @@
+# Agent platform and repository governance
+* @RicardoJBarrios
+
+# High-impact runtime and policy surfaces
+/.codex/ @RicardoJBarrios
+/agent_platform/ @RicardoJBarrios
+/scripts/codex-* @RicardoJBarrios
+/scripts/agent-* @RicardoJBarrios
+/tests/test_codex_runtime.py @RicardoJBarrios
+/tests/test_agent_*.py @RicardoJBarrios
+
+# CI, security, integrations, and agent instructions
+/.github/ @RicardoJBarrios
+/AGENTS.md @RicardoJBarrios
+/docs/ @RicardoJBarrios
+/custom_components/ @RicardoJBarrios

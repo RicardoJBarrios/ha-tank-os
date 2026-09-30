@@ -1,0 +1,20 @@
+{
+  "name": "ha-tank-os",
+  "interface": {
+    "displayName": "ha-tank-os local plugins"
+  },
+  "plugins": [
+    {
+      "name": "ha-tank-os-codex-runtime",
+      "source": {
+        "source": "local",
+        "path": "."
+      },
+      "policy": {
+        "installation": "INSTALLED_BY_DEFAULT",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

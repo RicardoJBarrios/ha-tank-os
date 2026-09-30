@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "charliermarsh.ruff",
+    "dbaeumer.vscode-eslint",
+    "DavidAnson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "redhat.vscode-yaml",
+    "SonarSource.sonarlint-vscode",
+    "github.vscode-github-actions",
+    "ms-python.python"
+  ],
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript-next"]
+}

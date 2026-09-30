@@ -1,0 +1,12 @@
+.agents/
+.git/
+.specify/
+_bmad/
+node_modules/
+.venv/
+openspec/
+pnpm-lock.yaml
+coverage/
+dist/
+build/
+artifacts/

@@ -1,0 +1,13 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant@sha256:3e6710a7ab2a61311d9d899b719f6c3657791c63e8f4942cec4ebc42401d6b76
+    container_name: ha-tank-os-homeassistant
+    restart: "no"
+    stop_grace_period: 60s
+    environment:
+      TZ: ${TZ:-Atlantic/Canary}
+    ports:
+      - "127.0.0.1:8123:8123"
+    volumes:
+      - ./.docker/ha/config:/config
+      - ./custom_components:/config/custom_components:ro

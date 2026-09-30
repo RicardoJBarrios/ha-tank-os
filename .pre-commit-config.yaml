@@ -1,0 +1,51 @@
+default_language_version:
+  node: system
+
+repos:
+  - repo: local
+    hooks:
+      - id: markdownlint
+        name: Markdown lint
+        entry: pnpm lint:markdown
+        language: system
+        pass_filenames: false
+      - id: cspell
+        name: English spelling check
+        entry: pnpm lint:spelling
+        language: system
+        pass_filenames: false
+      - id: ruff-check
+        name: Python lint
+        entry: pnpm lint:python
+        language: system
+        pass_filenames: false
+      - id: ruff-format
+        name: Python format check
+        entry: pnpm format:python:check
+        language: system
+        pass_filenames: false
+      - id: mypy
+        name: Python type check
+        entry: pnpm typecheck:python
+        language: system
+        pass_filenames: false
+      - id: eslint
+        name: Frontend lint
+        entry: pnpm lint:frontend
+        language: system
+        pass_filenames: false
+      - id: prettier
+        name: Frontend format check
+        entry: pnpm format:frontend:check
+        language: system
+        pass_filenames: false
+      - id: bandit
+        name: Python security scan
+        entry: pnpm security:python
+        language: system
+        pass_filenames: false
+      - id: gitleaks
+        name: Secret scan
+        entry: gitleaks protect --staged --config .gitleaks.toml --redact --no-banner
+        language: system
+        pass_filenames: false

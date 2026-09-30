@@ -1,0 +1,92 @@
+{
+  "description": "Native project hooks for the ha-tank-os Codex runtime.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event SessionStart",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event SessionStart",
+            "statusMessage": "Initializing ha-tank-os agent runtime"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event PreToolUse",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event PreToolUse",
+            "statusMessage": "Checking ha-tank-os tool policy"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event PostToolUse",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event PostToolUse"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event SubagentStart",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event SubagentStart"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event SubagentStop",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event SubagentStop"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event Stop",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event Stop",
+            "statusMessage": "Validating ha-tank-os completion evidence"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/codex-hook-launcher.py --event PermissionRequest",
+            "command_windows": "py -3 scripts/codex-hook-launcher.py --event PermissionRequest",
+            "statusMessage": "Recording ha-tank-os approval request"
+          }
+        ]
+      }
+    ]
+  }
+}
