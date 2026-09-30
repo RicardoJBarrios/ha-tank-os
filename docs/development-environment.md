@@ -128,6 +128,17 @@ use its Web API and scanner with a project-specific token stored outside the
 repository. A SonarQube MCP is optional for conversational inspection only and
 is not required for analysis, quality gates, or CI.
 
+`pnpm agent:health` also detects the local server automatically. The separate
+test-environment dependency audit may report vulnerabilities inherited from
+the pinned Home Assistant release. For the current `2026.9.4` test line,
+`pip-audit` reports advisories for `cryptography 48.0.1` and `PyJWT 2.13.0`,
+while Home Assistant requires `PyJWT==2.13.0`; forcing the fixed PyJWT line
+makes dependency resolution fail. This is an accepted, bounded risk for the
+disposable local test environment: it does not block local development and
+those packages are not shipped by the product. The audit must remain visible,
+must not be presented as a clean release security result, and must be re-run
+when the Home Assistant test line is upgraded.
+
 The gate currently runs Markdown linting, English spelling checks, Ruff lint
 and format checks, mypy, ESLint, Prettier, gitleaks secret scanning,
 `pnpm audit --audit-level=high`, OpenSpec validation, and `git diff --check`.

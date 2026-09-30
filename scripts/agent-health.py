@@ -19,6 +19,7 @@ EXPECTED_EVENTS = {
     "SubagentStop",
     "Stop",
 }
+DEFAULT_SONAR_HOST_URL = "http://127.0.0.1:9000"
 
 
 def check_hooks() -> tuple[str, str]:
@@ -84,18 +85,23 @@ def check_mcp() -> tuple[str, str]:
 
 
 def check_sonar() -> tuple[str, str]:
-    url = os.environ.get("SONAR_HOST_URL")
-    if not url:
-        return "not_configured", "set SONAR_HOST_URL to include local SonarQube in this preflight"
+    configured_url = os.environ.get("SONAR_HOST_URL")
+    url = configured_url or DEFAULT_SONAR_HOST_URL
     request = urllib.request.Request(f"{url.rstrip('/')}/api/system/status")
     try:
         with urllib.request.urlopen(request, timeout=5) as response:
             payload = json.loads(response.read())
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as error:
+        if not configured_url:
+            return (
+                "not_configured",
+                "local SonarQube is not running; set SONAR_HOST_URL for a remote server",
+            )
         return "unavailable", f"SonarQube check failed: {type(error).__name__}"
     if payload.get("status") != "UP":
         return "unavailable", f"SonarQube status is {payload.get('status', 'unknown')}"
-    return "pass", f"SonarQube ready: {payload.get('version', 'version unknown')}"
+    scope = "local SonarQube" if not configured_url else "SonarQube"
+    return "pass", f"{scope} ready: {payload.get('version', 'version unknown')}"
 
 
 def main() -> int:

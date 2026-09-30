@@ -66,7 +66,7 @@ Run commands from the repository root.
 | Record an agent run | `pnpm agent:trace -- start ...` | Creates the local run boundary; finish or recover it explicitly |
 | Inspect agent observability | `pnpm agent:observability -- --start <UTC> --end <UTC>` | Reads bounded metrics from the local trace without raw payloads |
 | Validate Codex runtime hooks | `pnpm agent:codex:self-test` | Verifies hook coverage, Windows launchers, and the controlled-tool registry before strict mode |
-| Check agent runtime readiness | `pnpm agent:health` | Redacted, non-mutating check of hooks, Home Assistant MCP, and optional SonarQube |
+| Check agent runtime readiness | `pnpm agent:health` | Redacted, non-mutating check of hooks, Home Assistant MCP, and local SonarQube when available |
 
 Agent-platform modules are exercised together by the Python suite, which is
 part of `pnpm quality:checks`. Tool adapters must still call policy and
@@ -139,6 +139,8 @@ lexical, semantic, or graph discovery as authoritative.
 - The Web API and scanner are the canonical automation interfaces. A SonarQube
   MCP is not required for analysis or quality gates; it is only useful for
   conversational querying of issues and measures.
+- `pnpm agent:health` probes the local `127.0.0.1:9000` endpoint by default and
+  uses `SONAR_HOST_URL` only when a remote or non-default server is intended.
 - The project-specific SonarQube project and analysis token remain pending
   until product source roots and ownership are approved. Never reuse the
   existing global Sonar MCP configuration for another repository.
