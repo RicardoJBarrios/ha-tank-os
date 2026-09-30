@@ -4,10 +4,11 @@
 import json
 import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from agent_platform.codex_runtime import TOOL_OPERATIONS, handle_event
+from agent_platform.codex_runtime import TOOL_OPERATIONS, handle_event, mode
 from agent_platform.trace import TraceStore
 
 
@@ -33,12 +34,14 @@ def main() -> int:
             for hook in group.get("hooks", [group]):
                 if hook.get("type") == "command" and not hook.get("command_windows"):
                     raise SystemExit(f"missing Windows hook command for {event}")
-    store = TraceStore(Path(".agent-state") / "codex-self-test.sqlite3")
-    session = handle_event(
-        "SessionStart", {"self_test": True, "session_id": "codex-self-test"}, store=store
-    )
-    if session["decision"] != "allow" or not session.get("run_id"):
-        raise SystemExit("session initialization failed")
+    with TemporaryDirectory(prefix="ha-tank-os-codex-self-test-") as temporary_directory:
+        store = TraceStore(Path(temporary_directory) / "trace.sqlite3")
+        session = handle_event(
+            "SessionStart", {"self_test": True, "session_id": "codex-self-test"}, store=store
+        )
+        if session["decision"] != "allow" or not session.get("run_id"):
+            raise SystemExit("session initialization failed")
+        store.finish(session["run_id"], "succeeded", reason="self-test complete")
     if not TOOL_OPERATIONS:
         raise SystemExit("controlled tool registry is empty")
     print(
@@ -47,7 +50,7 @@ def main() -> int:
                 "status": "valid",
                 "hook_events": sorted(actual),
                 "controlled_tools": sorted(TOOL_OPERATIONS),
-                "mode": "audit",
+                "mode": mode(),
             },
             indent=2,
             sort_keys=True,

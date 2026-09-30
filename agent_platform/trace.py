@@ -21,7 +21,7 @@ TRACE_SCHEMA = "agent-run-trace/v1"
 REDACTED = "[REDACTED]"
 TERMINAL_STATUSES = frozenset({"succeeded", "failed", "cancelled", "abandoned"})
 SECRET_KEY = re.compile(
-    r"(?i)(authorization|api[_-]?key|access[_-]?token|auth[_-]?token|password|secret|credential)"
+    r"(?i)(authorization|api[_-]?key|access[_-]?token|auth[_-]?token|token|password|secret|credential)"
 )
 SECRET_VALUE = re.compile(
     r"(?i)(bearer\s+)[A-Za-z0-9._~+/=-]+|(?:ghp|github_pat|sk|xox[baprs])_[A-Za-z0-9_-]{8,}"

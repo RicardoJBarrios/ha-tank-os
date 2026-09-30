@@ -47,6 +47,16 @@ def test_redacts_persisted_and_exported_values(tmp_path: Path) -> None:
     assert store.inspect(run_id)["events"][1]["redactions"] == ["Authorization"]
 
 
+def test_redacts_bare_token_fields(tmp_path: Path) -> None:
+    store = TraceStore(tmp_path / "trace.sqlite3")
+    run_id = store.start_run(agent_id="test")["run_id"]
+
+    event = store.append_event(run_id, "request.sent", {"token": "secret-value"})
+
+    assert event["payload"] == {"token": "[REDACTED]"}
+    assert event["redactions"] == ["token"]
+
+
 def test_verification_reports_tampering(tmp_path: Path) -> None:
     path = tmp_path / "trace.sqlite3"
     store = TraceStore(path)
