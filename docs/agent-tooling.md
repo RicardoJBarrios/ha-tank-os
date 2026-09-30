@@ -19,7 +19,9 @@ which command is canonical, and which boundaries agents must preserve.
 
 Never create a parallel PRD, architecture, specification, plan, or task list.
 Do not implement product behavior before `Product baseline ready` and an
-approved `Change ready` change.
+approved `Change ready` change. Enforce the latter with
+`pnpm validate:readiness --change <id>`; OpenSpec structural validation alone is
+not sufficient.
 
 ## Canonical commands
 
@@ -41,6 +43,9 @@ Run commands from the repository root.
 | HA test dependency security | `pnpm security:python:test-environment` | Audits the pinned test stack; may expose upstream HA pins |
 | Secret scan | `pnpm security:secrets` | Scans repository content; excludes only local `.venv` and HA runtime state |
 | OpenSpec validation | `pnpm validate:openspec` | Uses the repository-local OpenSpec dependency |
+| Planning-document lint | `pnpm lint:planning` | Lints generated BMAD Markdown when `_bmad-output` exists; skips cleanly before product work starts |
+| Readiness status | `pnpm validate:readiness` | Reports whether the product baseline is not started or ready; does not authorize implementation |
+| Required change gate | `pnpm validate:readiness --change <id>` | Fails closed unless the approved baseline and bounded OpenSpec change are ready |
 | Pre-commit checks | `pre-commit run --all-files` | Hooks must remain aligned with package scripts |
 | Start local SonarQube | `pnpm sonarqube:up` | Local-only Docker service; never put tokens in the repository |
 | Check local SonarQube | `pnpm sonarqube:status` | Uses the unauthenticated local system-status API |

@@ -38,6 +38,7 @@
     "mypy",
     "pytest",
     "pyproject",
+    "prds",
     "isort",
     "Bandit",
     "venv"

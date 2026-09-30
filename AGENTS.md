@@ -28,6 +28,10 @@ fresh context pack for the active OpenSpec change at task boundaries. Treat
 packs and search results as derived aids: canonical requirements,
 architecture, ADRs, and OpenSpec artifacts remain authoritative.
 
+Before implementing a product change, run `pnpm validate:readiness --change
+<change-id>`. A passing `openspec validate --all` is structural validation only;
+it does not grant `Product baseline ready` or `Change ready`.
+
 If two authorities conflict, stop, identify the affected documents, and request
 correction of the owning authority. Do not silently choose a version.
 

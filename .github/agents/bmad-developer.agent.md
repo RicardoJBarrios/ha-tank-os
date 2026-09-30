@@ -37,7 +37,8 @@ and [`bmad-build/SKILL.md`](../../.agents/skills/bmad-build/SKILL.md).
 
 Implement only an approved OpenSpec change that has reached `Change ready`.
 Read its proposal, specification, design, tasks, relevant architecture, ADRs,
-and constitution before editing. Preserve provenance and uncertainty, run the
-applicable quality gates, and report technical verification separately from
+and constitution before editing. Preserve provenance and uncertainty, run
+`pnpm validate:readiness --change <change-id>` and the applicable quality gates,
+and report technical verification separately from
 product-owner validation. Write code, comments, tests, and technical
 documentation in English.
