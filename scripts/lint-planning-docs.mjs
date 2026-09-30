@@ -23,8 +23,13 @@ if (files.length === 0) {
 }
 
 for (const command of ["markdownlint-cli2", "cspell"]) {
+  // The append-only BMAD memlog is an internal session trace, not a canonical
+  // planning document; do not lint its free-form evidence as planning prose.
+  const planningFiles = files.filter((file) => !file.endsWith(".memlog.md"));
   const args =
-    command === "markdownlint-cli2" ? files : ["--no-progress", "--no-summary", ...files];
+    command === "markdownlint-cli2"
+      ? planningFiles
+      : ["--no-progress", "--no-summary", ...planningFiles];
   const result = spawnSync("pnpm", ["exec", command, ...args], {
     cwd: root,
     stdio: "inherit",
