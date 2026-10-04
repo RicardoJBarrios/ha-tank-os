@@ -40,7 +40,7 @@ Each canonical record receives a product identity. Home Assistant entity IDs, la
 
 ### Repository boundary with explicit transactional operations
 
-The application layer SHALL use a repository port for canonical reads and writes. The concrete persistence adapter SHALL provide atomic record mutations and versioned migration handling. Selecting the concrete Home Assistant storage mechanism is a prerequisite technical validation for implementation, not a product behavior decision.
+The application layer SHALL use a repository port for canonical reads and writes. This change uses Home Assistant's `Store` with atomic writes enabled, major/minor version metadata, and an explicit migration callback behind that port. The repository rereads a saved payload and reports a persistence error when the committed data cannot be confirmed. The evidence and limits are recorded in [validation-evidence.md](./validation-evidence.md).
 
 **Alternative considered:** use Recorder as the primary archive. Rejected because Recorder retention, purge, aggregation, and entity-centric semantics do not guarantee the required manual-record history and provenance.
 
@@ -52,7 +52,7 @@ New observations create new records. Corrections target one stable record, and r
 
 ### Native Home Assistant surfaces first
 
-The initial adapter should use native Home Assistant configuration and service/command surfaces where they can express the approved workflow. A custom frontend is not required for this change; any remaining usability gap must be demonstrated before custom UI is added.
+The initial adapter uses native Home Assistant configuration and service/command surfaces for the approved workflow. A custom frontend is not required for this change; any remaining usability gap must be demonstrated before custom UI is added.
 
 **Alternative considered:** build a custom dashboard first. Rejected because it would duplicate native capabilities before their fit is verified.
 
@@ -75,5 +75,5 @@ There is no existing product data or implementation to migrate. The implementati
 
 ## Open Questions
 
-- Which supported Home Assistant versions and concrete storage adapter satisfy the repository contract will be resolved by a bounded technical validation before implementation.
-- The exact native configuration/service interaction shape will be selected during implementation design after confirming current Home Assistant APIs; it must not change the observable requirements in the specs.
+- The product compatibility range beyond the pinned development line remains open and requires a separate compatibility decision.
+- Backup restoration, multi-process concurrency, and high-volume telemetry retention remain outside this change and require later bounded decisions.
