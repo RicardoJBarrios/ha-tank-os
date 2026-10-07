@@ -39,6 +39,23 @@ baseline, not an already verified version claim.
 
 ## Local test target
 
+### Test execution platforms
+
+`pnpm test:python` runs portable repository tests on Windows, Linux, and macOS.
+The pinned Home Assistant pytest plugin imports the POSIX-only `fcntl` module,
+so the runner disables that plugin on native Windows before test collection.
+Tests that start or import the Home Assistant runtime must explicitly report
+Windows skips and defer those imports until after the platform check. Linux
+and macOS CI keep the plugin enabled and run the complete runtime test suite.
+
+A passing Windows tooling check is not evidence of native Windows Home
+Assistant runtime support. Contributors on Windows use the Linux container
+target for Home Assistant execution. The required Windows quality job still
+runs Python tests and the remaining quality checks; it is not a static-only
+replacement for testing.
+
+### Complementary test layers
+
 The repository provides two complementary test layers:
 
 1. Python tests run through `uv` for fast, deterministic integration behavior.

@@ -15,7 +15,17 @@ if (!existsSync("tests") || !containsPythonFile("tests")) {
   process.exit(0);
 }
 
-const result = spawnSync("uv", ["run", "--locked", "--extra", "test", "pytest"], {
+const args = ["run", "--locked", "--extra", "test", "pytest"];
+if (process.platform === "win32") {
+  // The HA plugin imports POSIX-only fcntl before pytest can collect tests.
+  args.push("-p", "no:homeassistant");
+  console.log(
+    "Windows: Home Assistant pytest plugin disabled; runtime tests must report explicit skips. " +
+      "Portable tests still run; Linux and macOS CI run the Home Assistant tests.",
+  );
+}
+
+const result = spawnSync("uv", args, {
   stdio: "inherit",
   shell: false,
 });
