@@ -54,3 +54,76 @@ The implementation review found no discrepancy requiring an update to the
 approved PRD, capability map, architecture spine, or this change's
 specifications. Product-owner validation remains separate from these technical
 results.
+
+## Review preparation and verification refresh — 2026-10-07
+
+The review target is implementation commit `5a3f780`, compared with planning
+commit `e3479f6`: 18 changed files, 1,569 insertions, and 22 deletions. The local
+competitive-research supplement is outside that implementation diff.
+
+Environment: Node 24.18.0, pnpm 11.17.0, Python 3.14.6, pytest 9.0.3,
+uv 0.11.32, and pre-commit 4.6.1 on macOS.
+
+| Command | Current result |
+| --- | --- |
+| `pnpm context:pack --change establish-aquarium-observation-foundation` | Fresh derived context pack generated |
+| `pnpm validate:readiness --change establish-aquarium-observation-foundation` | Ready; implementation authorization only |
+| `pnpm quality` | Failed at the JavaScript dependency audit after all 48 Python tests, Markdown/planning/spelling checks, Python lint/format/types, and frontend lint/format passed |
+| `pnpm audit --json` | One high, one moderate, and one low advisory in development dependencies |
+| `pnpm security:python` | Passed; no issues identified |
+| `pnpm security:python:dependencies` | Skipped by the canonical script because no product requirements file exists; this is not a clean test-environment dependency audit |
+| `pnpm validate:openspec` | All 13 changes passed structural validation |
+| `pnpm security:secrets` | Passed; no leaks found |
+| `pre-commit run --all-files` | All nine hooks passed |
+| `git diff --check` | Passed |
+
+The blocking advisory is
+[GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)
+for `braces` 3.0.3, used through OpenSpec and Markdown tooling. The audit reports
+a patched range of `>=3.0.4`, but `pnpm view braces versions --json` returned
+versions only through 3.0.3. `pnpm update braces --depth Infinity` completed
+without changing the dependency or lockfile. A compatible remediation therefore
+remains unresolved in the queried registry. The other reported packages are
+`smol-toml` 1.8.0 (moderate) and `katex` 0.16.47 (low). No advisory was
+suppressed, and the full quality gate remains failed.
+
+Independent review has not run. The local PreToolUse hook rejected the first
+reviewer launch with `unknown Codex tool` for `collaborationspawn_agent`. The
+BMAD review workflow's fallback package contains four self-contained reviewer
+prompts, the commit narrative, and a source-hash lineage manifest under the
+ignored local directory
+`_bmad-output/implementation-artifacts/artifacts/observation-review-2026-10-07/`.
+These are handoff inputs, not review findings or acceptance evidence.
+
+No interactive owner-validation session or new Home Assistant compatibility
+exercise was performed during this refresh. At the end of that refresh,
+independent review, dependency remediation, and product-owner validation were
+outstanding. No pull request had been opened and the change had not been
+archived.
+
+## Product-owner validation and delivery preparation — 2026-10-07
+
+The product owner explicitly confirmed validation in the conversation and
+instructed the agent to continue. This records owner acceptance of the first
+aquarium-observation foundation implemented in `5a3f780`. No additional
+scenario-execution report was supplied with that confirmation.
+
+Owner acceptance does not close independent review or the failing dependency
+gate. A fresh `pnpm security:dependencies` still reports the high-severity
+`braces` advisory. `pnpm agent:codex:self-test` reports a valid configuration in
+audit mode, with no collaboration tool in its controlled-tool list; it does
+not establish successful reviewer execution or strict runtime enforcement.
+
+Delivery is prepared as two dependent draft pull requests because `main`
+contains only the initial repository commit:
+
+- The development-environment prerequisite contains the existing commits
+  through `e0174bd` and targets `main`.
+- The product baseline and observation foundation contain the subsequent
+  planning, implementation, and evidence updates and target the prerequisite
+  branch. After the prerequisite merges, this pull request must target `main`
+  and pass its required checks and review before merging.
+
+The separate uncommitted competitive-research supplement is not part of this
+delivery. The OpenSpec change remains active while independent review and
+technical delivery gates are unresolved.
