@@ -2,15 +2,23 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import pytest
-from homeassistant.core import Context, HomeAssistant
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tank_os import async_setup_entry, async_unload_entry
-from custom_components.tank_os.config_flow import TankOsConfigFlow
-from custom_components.tank_os.const import DOMAIN
+if sys.platform != "win32":
+    from homeassistant.core import Context, HomeAssistant
+    from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+    from custom_components.tank_os import async_setup_entry, async_unload_entry
+    from custom_components.tank_os.config_flow import TankOsConfigFlow
+    from custom_components.tank_os.const import DOMAIN
+
+pytestmark = pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Home Assistant runtime requires POSIX; covered by Linux and macOS CI.",
+)
 
 
 @pytest.mark.asyncio

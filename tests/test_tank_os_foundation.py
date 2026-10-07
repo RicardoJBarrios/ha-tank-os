@@ -3,19 +3,27 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import storage
-from homeassistant.helpers.storage import Store
 
-from custom_components.tank_os.application import (
-    ApplicationService,
-    AuthorizationError,
+if sys.platform != "win32":
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers import storage
+    from homeassistant.helpers.storage import Store
+
+    from custom_components.tank_os.application import (
+        ApplicationService,
+        AuthorizationError,
+    )
+    from custom_components.tank_os.domain import DependencyError, DomainValidationError
+    from custom_components.tank_os.persistence import CanonicalRepository, PersistenceError
+
+pytestmark = pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Home Assistant runtime requires POSIX; covered by Linux and macOS CI.",
 )
-from custom_components.tank_os.domain import DependencyError, DomainValidationError
-from custom_components.tank_os.persistence import CanonicalRepository, PersistenceError
 
 
 async def _application(tmp_path: Path) -> tuple[HomeAssistant, ApplicationService]:

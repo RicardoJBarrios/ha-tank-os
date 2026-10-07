@@ -127,3 +127,34 @@ contains only the initial repository commit:
 The separate uncommitted competitive-research supplement is not part of this
 delivery. The OpenSpec change remains active while independent review and
 technical delivery gates are unresolved.
+
+## Draft delivery and CI follow-up — 2026-10-07
+
+The delivery is published as dependent drafts:
+
+- [Development environment, PR #1](https://github.com/RicardoJBarrios/ha-tank-os/pull/1).
+- [Product baseline and foundation, PR #2](https://github.com/RicardoJBarrios/ha-tank-os/pull/2).
+
+The first product CI run
+([37691322697](https://github.com/RicardoJBarrios/ha-tank-os/actions/runs/37691322697))
+passed all 48 tests on Linux and macOS before the dependency audit failed.
+The secret scan passed. Windows failed before test collection because the Home
+Assistant pytest plugin imported the POSIX-only `fcntl` module. The browser
+job could not resolve a misspelled `actions/setup-node` commit reference.
+
+The prerequisite fixes the action reference to the officially verified commit
+`49933ea5288caeca8642d1e84afbd3f7d6820020`, and disables only the Home Assistant
+pytest plugin on native Windows. The product tests explicitly skip their 11
+Home Assistant runtime cases on Windows and defer runtime imports there.
+Portable tests still run on Windows; Linux and macOS retain all runtime tests
+and their existing assertions. This defines test execution boundaries, not
+native Windows Home Assistant runtime support.
+
+Local verification of the correction: `actionlint` 1.7.12, frontend lint and
+formatting, Markdown/spelling checks, Python lint/formatting, and
+`git diff --check` passed. `pnpm test:python` passed all 37 prerequisite tests
+in its isolated worktree and all 48 product-checkout tests on macOS.
+`pre-commit run --all-files` and the prerequisite commit hooks passed.
+The prerequisite's full `pnpm quality` gate still fails at the same dependency
+audit; Windows execution and the browser job require confirmation from the
+updated CI run.
