@@ -25,6 +25,7 @@
     "ha:wait": "node scripts/ha-wait.mjs",
     "ha:mcp:status": "node scripts/ha-mcp-status.mjs",
     "test:python": "node scripts/run-python-tests.mjs",
+    "test:braces": "node --test tests/braces-depth.test.mjs",
     "test:e2e": "pnpm ha:wait && playwright test",
     "test:e2e:headed": "pnpm ha:wait && playwright test --headed",
     "test:e2e:ui": "pnpm ha:wait && playwright test --ui",
@@ -43,13 +44,14 @@
     "agent:observability": "uv run python scripts/agent-observability.py",
     "agent:codex:self-test": "uv run python scripts/codex-runtime-self-test.py",
     "agent:health": "uv run python scripts/agent-health.py",
-    "quality:checks": "pnpm test:python && pnpm lint:markdown && pnpm lint:planning && pnpm lint:spelling && pnpm lint:python && pnpm format:python:check && pnpm typecheck:python && pnpm lint:frontend && pnpm format:frontend:check && pnpm security:dependencies && pnpm security:python && pnpm security:python:dependencies && pnpm validate:openspec && pnpm validate:readiness && git diff --check",
+    "quality:checks": "pnpm test:python && pnpm test:braces && pnpm lint:markdown && pnpm lint:planning && pnpm lint:spelling && pnpm lint:python && pnpm format:python:check && pnpm typecheck:python && pnpm lint:frontend && pnpm format:frontend:check && pnpm security:dependencies && pnpm security:python && pnpm security:python:dependencies && pnpm validate:openspec && pnpm validate:readiness && git diff --check",
     "quality": "pnpm quality:checks && pnpm security:secrets"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@fission-ai/openspec": "1.13.2",
     "@playwright/test": "1.63.0",
+    "braces": "workspace:*",
     "cspell": "10.3.6",
     "eslint": "10.11.0",
     "eslint-config-prettier": "10.1.8",

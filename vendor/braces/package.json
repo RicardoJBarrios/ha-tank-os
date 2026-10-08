@@ -1,0 +1,14 @@
+{
+  "name": "braces",
+  "version": "3.0.4+ha-tank-os.1",
+  "description": "Locally patched copy of the braces 3.0.3 runtime.",
+  "homepage": "https://github.com/micromatch/braces",
+  "license": "MIT",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "fill-range": "^7.1.1"
+  }
+}

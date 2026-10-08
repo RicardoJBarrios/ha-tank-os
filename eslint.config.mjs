@@ -14,6 +14,7 @@ export default [
       "coverage/**",
       "dist/**",
       "build/**",
+      "vendor/braces/**",
     ],
   },
   eslint.configs.recommended,

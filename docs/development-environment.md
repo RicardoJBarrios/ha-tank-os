@@ -198,6 +198,26 @@ monitors Node tooling and GitHub Actions. The local and CI secret scans use the
 repository-specific [gitleaks configuration](../.gitleaks.toml), whose only
 allowlist entry is a verified false positive in a generated BMAD manifest.
 
+`braces` is currently reached only through development tooling. The npm release
+remains at 3.0.3 while the
+[GitHub security advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) has no
+official patched version. The upstream maintainer disputes the report in the
+[project issue](https://github.com/micromatch/braces/issues/70). pnpm's
+[`blockExoticSubdeps` policy](https://pnpm.io/settings#blockexoticsubdeps)
+rejects Git dependencies in transitive dependencies, so the repository carries
+the runtime files from the npm
+`braces@3.0.3` tarball (integrity
+`sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==`)
+with a parser depth guard as the only functional change, following the
+[community fork release](https://github.com/Im-Fran/braces/releases/tag/3.0.4).
+The guard limits brace and parenthesis
+nesting to 100 and throws `SyntaxError` for deeper patterns. This keeps the
+audit enabled without ignoring the advisory. The vendored package is versioned
+`3.0.4+ha-tank-os.1`; focused regression tests cover the limit. Review and
+remove this local patch when upstream publishes a fix or the advisory status
+changes. This mitigation records a conservative local limit rather than
+asserting a product exposure.
+
 SonarQube for IDE is installed for editor feedback on Python and TypeScript.
 The local Community Build in `compose.sonar.yaml` is the selected development
 server. It is an additional analysis layer, not a replacement for Ruff, ESLint,
