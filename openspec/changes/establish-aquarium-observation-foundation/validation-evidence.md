@@ -158,3 +158,27 @@ in its isolated worktree and all 48 product-checkout tests on macOS.
 The prerequisite's full `pnpm quality` gate still fails at the same dependency
 audit; Windows execution and the browser job require confirmation from the
 updated CI run.
+
+## Windows verification and planning-lint correction — 2026-10-08
+
+CI run
+[37692009492](https://github.com/RicardoJBarrios/ha-tank-os/actions/runs/37692009492)
+confirmed 37 passing portable tests and 11 explicit Home Assistant runtime
+skips on Windows. The browser smoke job and secret scan passed. Windows then
+failed to launch the planning-document linter, while Linux and macOS reached
+the existing dependency-audit failure.
+
+The planning-lint runner now invokes the pinned local CLI entry points through
+Node directly, keeps filenames as separate arguments without a shell, and
+normalizes discovered paths for cross-platform glob matching. Launch errors
+are reported explicitly. Local `pnpm lint:frontend`,
+`pnpm format:frontend:check`, `pnpm lint:planning`, and `git diff --check` passed.
+The full `pnpm quality` rerun passed 48 Python tests and static checks before
+failing at the unchanged `braces` advisory. The package registry still listed
+versions only through 3.0.3 when checked on this date.
+
+The prerequisite Windows run also exposed CRLF checkout conversion conflicting
+with Ruff's declared LF format. Its `.gitattributes` correction preserves LF
+for text files. An isolated checkout with `core.autocrlf=true` confirmed LF
+for representative Python, JavaScript, and workflow files. The updated Windows
+CI run remains the verification of the combined corrections.
