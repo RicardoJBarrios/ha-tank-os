@@ -9,4 +9,5 @@ pnpm-lock.yaml
 coverage/
 dist/
 build/
+vendor/braces/
 artifacts/

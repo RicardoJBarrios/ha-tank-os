@@ -1,3 +1,6 @@
+packages:
+  - vendor/braces
+
 minimumReleaseAgeExclude:
   - '@cspell/cspell-bundled-dicts@10.3.6'
   - '@cspell/cspell-json-reporter@10.3.6'
@@ -21,3 +24,5 @@ minimumReleaseAgeExclude:
   - cspell-lib@10.3.6
   - cspell-trie-lib@10.3.6
   - cspell@10.3.6
+overrides:
+  "braces@^3.0.3": workspace:*
