@@ -1,0 +1,11 @@
+{
+  "domain": "tank_os",
+  "name": "ha-tank-os",
+  "version": "0.1.0",
+  "documentation": "https://github.com/RicardoJBarrios/ha-tank-os",
+  "issue_tracker": "https://github.com/RicardoJBarrios/ha-tank-os/issues",
+  "codeowners": ["@RicardoJBarrios"],
+  "config_flow": true,
+  "iot_class": "local_push",
+  "requirements": []
+}

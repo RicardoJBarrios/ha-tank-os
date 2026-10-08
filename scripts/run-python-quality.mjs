@@ -55,7 +55,15 @@ if (mode === "typecheck") {
     console.log("Python typecheck skipped: no product Python sources exist yet.");
     process.exit(0);
   }
-  run("mypy", ["--config-file", "pyproject.toml", ...productPythonRoots]);
+  run("uv", [
+    "run",
+    "--extra",
+    "test",
+    "mypy",
+    "--config-file",
+    "pyproject.toml",
+    ...productPythonRoots,
+  ]);
 }
 
 if (productPythonRoots.length === 0) {
