@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@fission-ai/openspec": "1.13.2",
+    "@fission-ai/openspec": "1.14.0",
     "@playwright/test": "1.63.0",
     "braces": "workspace:*",
     "cspell": "10.3.6",
