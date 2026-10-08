@@ -1,8 +1,9 @@
 # Home Assistant Compatibility
 
-The product targets Home Assistant, but no integration manifest or product
-Python source exists yet. Compatibility is therefore a pending engineering
-baseline, not an already verified version claim.
+The product currently uses a custom Home Assistant integration in
+`custom_components/tank_os/`. Compatibility remains a pending engineering
+baseline: the repository pins a test version but has not declared a supported
+Home Assistant release range.
 
 ## Current policy
 
@@ -12,12 +13,10 @@ baseline, not an already verified version claim.
   environment.
 - Keep the repository Python floor at 3.14.2 through [`.python-version`](../.python-version)
   and CI until the product baseline adopts a different supported floor.
-- Use Home Assistant's native integration scaffolding and validation rules when
-  the product baseline confirms a custom integration. Do not invent a parallel
-  Home Assistant runtime or entity model.
-- Add a compatibility job that installs the selected Home Assistant release and
-  runs the integration tests as soon as `custom_components/**/manifest.json`
-  exists.
+- Use Home Assistant's native integration scaffolding and validation rules.
+  Do not invent a parallel Home Assistant runtime or entity model.
+- Add compatibility jobs for the declared supported Home Assistant releases
+  when the support range is selected.
 - Use the local black-box target in `compose.ha.yaml` for API, config-flow,
   entity, restart, and migration scenarios that cannot be proven by Python
   tests alone. Keep these tests opt-in and isolated from production instances.
@@ -30,12 +29,10 @@ baseline, not an already verified version claim.
 
 ## Pending baseline decisions
 
-- Whether the first deliverable is a custom integration or a contribution to
-  Home Assistant Core.
-- The integration domain and manifest ownership.
 - The minimum and maximum supported Home Assistant release range.
-- The test strategy for config flow, storage, translations, entities, and
-  migration behavior.
+- The Home Assistant Integration Quality Scale target.
+- Additional compatibility coverage beyond the currently pinned integration
+  test environment.
 
 ## Local test target
 

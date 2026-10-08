@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurar ha-tank-os",
+        "description": "Crear el almacenamiento local de registros del acuario."
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Gestionar fuentes de Home Assistant",
+        "menu_options": {
+          "add": "Añadir asociación",
+          "edit": "Editar asociación",
+          "remove": "Eliminar asociación",
+          "finish": "Terminar"
+        }
+      },
+      "add": {
+        "title": "Asociar una entidad de origen",
+        "data": {
+          "entity_id": "Entidad de Home Assistant",
+          "target": "Tanque o ubicación del dominio"
+        }
+      },
+      "edit": {
+        "title": "Elegir una asociación para editar",
+        "data": {
+          "association_index": "Asociación"
+        }
+      },
+      "edit_entry": {
+        "title": "Actualizar asociación de origen",
+        "data": {
+          "entity_id": "Entidad de Home Assistant",
+          "target": "Tanque o ubicación del dominio"
+        }
+      },
+      "remove": {
+        "title": "Elegir una asociación para eliminar",
+        "data": {
+          "association_index": "Asociación"
+        }
+      }
+    },
+    "error": {
+      "no_targets": "Crea un tanque o una ubicación del dominio antes de añadir una fuente.",
+      "no_associations": "No hay asociaciones de fuentes que gestionar.",
+      "entity_not_found": "La entidad seleccionada de Home Assistant no está disponible.",
+      "target_not_found": "El tanque o la ubicación seleccionados ya no existen.",
+      "already_associated": "Esta entidad ya está asociada con ese destino."
+    },
+    "abort": {
+      "association_not_found": "La asociación seleccionada ya no existe."
+    }
+  }
+}
