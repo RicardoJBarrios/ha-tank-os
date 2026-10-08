@@ -1,0 +1,27 @@
+# Project-local Codex configuration. Keep credentials in the user keyring or
+# user-level Codex configuration; never commit secrets here.
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+startup_timeout_sec = 10
+tool_timeout_sec = 60
+
+# Local Home Assistant MCP Server integration. The token is provisioned in the
+# user environment, never in this repository.
+[mcp_servers.homeAssistantLocal]
+url = "http://127.0.0.1:8123/api/mcp/assist"
+bearer_token_env_var = "HA_TEST_TOKEN"
+startup_timeout_sec = 10
+tool_timeout_sec = 60
+
+# Disable unrelated user-level endpoints for this repository. The local
+# project endpoint above is the only Home Assistant MCP used here, and the
+# SonarQube scanner/API is the canonical quality interface.
+[mcp_servers.home_assistant]
+enabled = false
+
+[mcp_servers.sonarqube]
+enabled = false
+
+[plugins."ha-tank-os-codex-runtime@ha-tank-os"]
+enabled = false

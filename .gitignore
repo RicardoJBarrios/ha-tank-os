@@ -1,0 +1,46 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+
+# Local Home Assistant runtime state
+.docker/ha/config/*
+!.docker/ha/config/configuration.yaml
+.docker/ha/config/.storage/
+.docker/ha/config/home-assistant_v2.db*
+.docker/ha/config/*.log
+.docker/ha/config/secrets.yaml
+
+# Node and package managers
+node_modules/
+.pnpm-store/
+dist/
+build/
+artifacts/
+
+# Derived agent context index and packs
+.context/generated/
+.agent-state/
+
+# Local editor state
+.vscode/*.local.json
+.idea/

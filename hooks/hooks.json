@@ -1,0 +1,57 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SessionStart",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SessionStart",
+        "statusMessage": "Initializing ha-tank-os agent runtime"
+      }
+    ],
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PreToolUse",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PreToolUse",
+        "statusMessage": "Checking ha-tank-os tool policy"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PostToolUse",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PostToolUse"
+      }
+    ],
+    "SubagentStart": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SubagentStart",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SubagentStart"
+      }
+    ],
+    "SubagentStop": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SubagentStop",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event SubagentStop"
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event Stop",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event Stop",
+        "statusMessage": "Validating ha-tank-os completion evidence"
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "type": "command",
+        "command": "python3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PermissionRequest",
+        "command_windows": "py -3 ${PLUGIN_ROOT}/scripts/codex-runtime-hook.py --event PermissionRequest",
+        "statusMessage": "Recording ha-tank-os approval request"
+      }
+    ]
+  }
+}

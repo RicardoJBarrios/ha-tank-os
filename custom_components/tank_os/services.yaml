@@ -1,0 +1,124 @@
+create_tank:
+  name: Create tank
+  description: Create a tank with a stable product identity.
+  fields:
+    name:
+      name: Name
+      description: Display name for the managed aquarium.
+      required: true
+      example: Veril
+      selector:
+        text:
+list_tanks:
+  name: List tanks
+  description: Return all active tanks.
+create_location:
+  name: Create domain location
+  description: Create a domain location associated with a tank.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: true
+      selector:
+        text:
+    name:
+      name: Name
+      required: true
+      selector:
+        text:
+list_context:
+  name: List tank context
+  description: Return tanks and domain locations.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: false
+      selector:
+        text:
+record_observation:
+  name: Record observation
+  description: Record a manual observation without overwriting history.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: true
+      selector:
+        text:
+    parameter:
+      name: Parameter
+      required: true
+      selector:
+        text:
+    reported_value:
+      name: Reported value
+      required: true
+      selector:
+        text:
+    unit:
+      name: Unit
+      required: false
+      selector:
+        text:
+    qualifier:
+      name: Qualifier
+      required: false
+      selector:
+        text:
+    measurement_time:
+      name: Measurement time
+      required: false
+      selector:
+        text:
+    location_id:
+      name: Domain location ID
+      required: false
+      selector:
+        text:
+    sample_id:
+      name: Sample ID
+      required: false
+      selector:
+        text:
+    method_id:
+      name: Method ID
+      required: false
+      selector:
+        text:
+    instrument_id:
+      name: Instrument ID
+      required: false
+      selector:
+        text:
+    session_id:
+      name: Session ID
+      required: false
+      selector:
+        text:
+list_observations:
+  name: List observations
+  description: Return manual observations for a tank.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: true
+      selector:
+        text:
+    parameter:
+      name: Parameter
+      required: false
+      selector:
+        text:
+start_measurement_session:
+  name: Start measurement session
+  description: Start a partial or complete manual measurement session.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: true
+      selector:
+        text:
+    sample_id:
+      name: Sample ID
+      required: false
+      selector:
+        text:

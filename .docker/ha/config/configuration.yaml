@@ -1,0 +1,5 @@
+homeassistant:
+  name: ha-tank-os-test
+
+logger:
+  default: warning

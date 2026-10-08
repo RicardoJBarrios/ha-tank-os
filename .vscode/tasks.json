@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Quality checks",
+      "type": "shell",
+      "command": "pnpm quality",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Pre-commit all files",
+      "type": "shell",
+      "command": "pre-commit run --all-files",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "OpenSpec validation",
+      "type": "shell",
+      "command": "pnpm validate:openspec",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Home Assistant E2E",
+      "type": "shell",
+      "command": "pnpm test:e2e",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "Open Playwright report",
+      "type": "shell",
+      "command": "pnpm test:e2e:report",
+      "problemMatcher": []
+    }
+  ]
+}

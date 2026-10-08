@@ -1,0 +1,21 @@
+services:
+  sonarqube:
+    image: sonarqube:community@sha256:4905574ab8584dcac1a06c01cdc43a4ce9e369723ac4a7ab1d029c1bf71e6fe9
+    container_name: ha-tank-os-sonarqube
+    restart: unless-stopped
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+
+volumes:
+  sonarqube_data:
+    name: ha-tank-os-sonarqube-data
+  sonarqube_extensions:
+    name: ha-tank-os-sonarqube-extensions
+  sonarqube_logs:
+    name: ha-tank-os-sonarqube-logs

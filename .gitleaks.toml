@@ -1,0 +1,9 @@
+title = "ha-tank-os secret scanning"
+
+[allowlist]
+description = "Generated BMAD manifest contains filenames and non-secret metadata that can trigger generic-api-key heuristics."
+paths = [
+  '''^_bmad/_config/files-manifest\.csv$''',
+  '''^\.venv/.*$''',
+  '''^\.docker/ha/config/.*$'''
+]

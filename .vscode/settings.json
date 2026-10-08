@@ -1,0 +1,65 @@
+{
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.rulers": [100, 120],
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/.mypy_cache": true,
+    "**/__pycache__": true,
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "search.exclude": {
+    "**/.git": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/.mypy_cache": true,
+    "**/__pycache__": true,
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "editor.wordWrap": "on"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  },
+  "[json][jsonc][yaml][toml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  },
+  "cSpell.language": "en,en-GB",
+  "cSpell.configFile": "${workspaceFolder}/cspell.json",
+  "chat.useAgentSkills": true,
+  "chat.useAgentsMdFile": true,
+  "chat.agentHost.codexAgent.enabled": true,
+  "chat.editor.codex.preferAgentHost": true,
+  "yaml.validate": true,
+  "git.enableSmartCommit": false,
+  "git.confirmSync": true
+}

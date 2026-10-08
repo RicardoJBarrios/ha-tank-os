@@ -1,0 +1,5 @@
+status: ready
+owner_approval: approved
+prd: _bmad-output/planning-artifacts/prds/prd-ha-tank-os-2026-09-30/prd.md
+capability_map: _bmad-output/planning-artifacts/capability-map.md
+architecture: _bmad-output/planning-artifacts/architecture/architecture-ha-tank-os-2026-09-30/ARCHITECTURE-SPINE.md

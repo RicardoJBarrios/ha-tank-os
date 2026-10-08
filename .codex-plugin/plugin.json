@@ -1,0 +1,6 @@
+{
+  "name": "ha-tank-os-codex-runtime",
+  "version": "0.1.0",
+  "description": "Codex lifecycle hooks for ha-tank-os agent-platform enforcement.",
+  "hooks": "./hooks/hooks.json"
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ha-tank-os-codex-runtime",
+  "version": "0.1.0",
+  "description": "Codex lifecycle hooks for ha-tank-os agent-platform enforcement.",
+  "extensions": {
+    "com.openai": {
+      "hooks": "./hooks/hooks.json"
+    }
+  }
+}
