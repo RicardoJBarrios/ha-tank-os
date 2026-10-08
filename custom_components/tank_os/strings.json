@@ -1,0 +1,59 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up ha-tank-os",
+        "description": "Create the local aquarium record store."
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Manage Home Assistant sources",
+        "menu_options": {
+          "add": "Add an association",
+          "edit": "Edit an association",
+          "remove": "Remove an association",
+          "finish": "Finish"
+        }
+      },
+      "add": {
+        "title": "Associate a source entity",
+        "data": {
+          "entity_id": "Home Assistant entity",
+          "target": "Tank or domain location"
+        }
+      },
+      "edit": {
+        "title": "Choose an association to edit",
+        "data": {
+          "association_index": "Association"
+        }
+      },
+      "edit_entry": {
+        "title": "Update the source association",
+        "data": {
+          "entity_id": "Home Assistant entity",
+          "target": "Tank or domain location"
+        }
+      },
+      "remove": {
+        "title": "Choose an association to remove",
+        "data": {
+          "association_index": "Association"
+        }
+      }
+    },
+    "error": {
+      "no_targets": "Create a Tank or domain location before adding a source.",
+      "no_associations": "There are no source associations to manage.",
+      "entity_not_found": "The selected Home Assistant entity is not available.",
+      "target_not_found": "The selected Tank or domain location no longer exists.",
+      "already_associated": "This entity is already associated with that target."
+    },
+    "abort": {
+      "association_not_found": "The selected association no longer exists."
+    }
+  }
+}
