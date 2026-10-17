@@ -99,3 +99,30 @@ Owner decisions:
 - **E.** Approved as excluded from the initial release, with livestock/plant tracking, scores, AI, and community features eligible for a future near-term review. Device-control schedules remain subject to a separate safety decision.
 
 The owner confirmed these decisions on 2026-09-30. They are now reflected in the PRD and capability map; future near-term candidates remain explicitly outside V1.
+
+## Supplementary review: Ocean Genesis
+
+**Reviewed:** 2026-10-07. **Status:** Research input only; no product scope or owner decision is changed by this supplement.
+
+### Evidence and limits
+
+The public [Ocean Genesis website](https://oceangenesis.co.uk/) and [Ocean Genesis portal](https://app.oceangenesis.co.uk/) were reviewed. The website describes the product's own marine buffer solutions and software. The portal is a client-rendered application; its public JavaScript bundle exposes route names and interface labels. The logged-in portal and its interactive behavior were not independently inspected, and the calculations, data semantics, and product claims were not validated. The findings below distinguish website claims from interface elements identified in the public application bundle.
+
+### Observed capabilities
+
+The website presents a three-step workflow: test the aquarium weekly or fortnightly, enter results to view metrics and dosage amounts, then dose Ocean Genesis buffer solutions. It advertises coral-profile-based parameter targets, recommended targets, automated consumption-rate and dosage calculations, and graphs of water-quality parameters and consumption. This is the vendor's description of its own product and products, not independent evidence for the calculation method or target values.
+
+The public application bundle contains navigation for Home, KH, Calcium, Magnesium, Shop, Settings, and account access. The KH, Calcium, and Magnesium page code includes a dated test-result form, a desired-parameter editing area, and summary labels for desired level, current level, daily dose, and manual adjustment. It also contains parameter and consumption-rate chart sections and handling for a repeated test date. These are code-level observations; they do not establish that the portal currently renders or behaves as described for an authenticated user. A public [demo page](https://app.oceangenesis.co.uk/viewdemo) is linked from the marketing site, but its interactive demo was not inspected.
+
+Sources: [Ocean Genesis website](https://oceangenesis.co.uk/), [Ocean Genesis portal](https://app.oceangenesis.co.uk/), [public portal demo page](https://app.oceangenesis.co.uk/viewdemo).
+
+### Comparison with the current PRD
+
+- The parameter-specific entry flow is a useful presentation reference for the approved configurable test-day capture in [FR-2](./prd.md#fr-2-capture-manual-observations) and [FR-10](./prd.md#fr-10-configure-aquarium-parameters-and-use-templates). TankOS already allows partial sessions and does not require a fixed panel.
+- Showing a target beside a current value can inform the presentation of [FR-10](./prd.md#fr-10-configure-aquarium-parameters-and-use-templates) and [FR-17](./prd.md#fr-17-review-distinct-chemistry-trends). TankOS targets remain configurable and contextual to the Tank and its profile; Ocean Genesis coral-profile recommendations are not adopted as universal targets.
+- Parameter and consumption charts are a visual reference for [FR-17](./prd.md#fr-17-review-distinct-chemistry-trends). TankOS must keep observed values, targets, aquarium events, and any derived result distinguishable and traceable.
+- Recording and planning a manual dosing event is already covered by [FR-19](./prd.md#fr-19-record-aquarium-operations). Calculating a chemistry consumption rate or recommending a product dose is not established by this benchmark as an approved TankOS capability. The PRD's approved calculators remain the transparent volume and unit calculations in [FR-21](./prd.md#fr-21-provide-transparent-aquarium-calculators).
+
+### Candidate idea for later review
+
+An optional parameter-consumption summary could be considered in a future product review if it answers a defined user need. Before adoption, its inputs, formula, units, time interval, tank-volume basis, product concentration assumptions, limitations, and relationship to source measurements would need to be specified and validated. Any result would be labeled as derived, preserve its evidence and method, and remain separate from a measured value or operation. A dose recommendation or device action is not implied by this candidate; no dosing recommendation or schedule is added to the current product baseline by this supplement.
