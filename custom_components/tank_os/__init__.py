@@ -24,6 +24,7 @@ from .const import (
     SERVICE_DELETE_LOCATION,
     SERVICE_DELETE_OBSERVATION,
     SERVICE_DELETE_TANK,
+    SERVICE_LATEST_OBSERVATIONS,
     SERVICE_LIST_CONTEXT,
     SERVICE_LIST_OBSERVATIONS,
     SERVICE_LIST_TANKS,
@@ -49,6 +50,7 @@ SERVICE_NAMES = (
     SERVICE_START_SESSION,
     SERVICE_RECORD_OBSERVATION,
     SERVICE_LIST_OBSERVATIONS,
+    SERVICE_LATEST_OBSERVATIONS,
     SERVICE_UPDATE_OBSERVATION,
     SERVICE_DELETE_OBSERVATION,
 )
@@ -171,6 +173,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             )
         }
 
+    async def latest_observations(call: ServiceCall) -> dict[str, Any]:
+        return {
+            "observations": await app(call).latest_observations(
+                call.data["tank_id"], call.data.get("parameter")
+            )
+        }
+
     async def update_observation(call: ServiceCall) -> dict[str, Any]:
         data = dict(call.data)
         observation_id = data.pop("observation_id")
@@ -255,6 +264,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass,
         SERVICE_LIST_OBSERVATIONS,
         list_observations,
+        vol.Schema(
+            {
+                CONF_TANK_ID: cv.string,
+                vol.Optional("parameter"): cv.string,
+            }
+        ),
+    )
+    _register_service(
+        hass,
+        SERVICE_LATEST_OBSERVATIONS,
+        latest_observations,
         vol.Schema(
             {
                 CONF_TANK_ID: cv.string,

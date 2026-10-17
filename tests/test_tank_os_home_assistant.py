@@ -86,10 +86,24 @@ async def test_native_services_create_and_retrieve_context(tmp_path: Path) -> No
             context=user_context,
             return_response=True,
         )
+        latest = await hass.services.async_call(
+            DOMAIN,
+            "latest_observations",
+            {"tank_id": tank["tank_id"], "parameter": "alkalinity"},
+            blocking=True,
+            context=user_context,
+            return_response=True,
+        )
 
         assert context["context"]["tanks"][0]["tank_id"] == tank["tank_id"]
         assert context["context"]["locations"][0]["name"] == "Display"
         assert observations["observations"][0]["qualifier"] == "<"
+        latest_observation = latest["observations"][0]
+        assert latest_observation["parameter"] == "alkalinity"
+        assert latest_observation["source"] == "manual"
+        assert latest_observation["qualifier"] == "<"
+        assert latest_observation["time_basis"] == "recording_time"
+        assert latest_observation["ordering_timestamp"].endswith("+00:00")
     finally:
         await async_unload_entry(hass, entry)
         await hass.async_stop()

@@ -190,6 +190,44 @@ class ApplicationService:
             observations = [item for item in observations if item["parameter"] == parameter]
         return observations
 
+    async def latest_observations(
+        self, tank_id: str, parameter: str | None = None
+    ) -> list[dict[str, Any]]:
+        """Return all observations tied for latest per parameter, with ordering provenance."""
+        data = await self._repository.async_load()
+        self._require_tank(data, tank_id)
+        observations = [item for item in data["observations"] if item["tank_id"] == tank_id]
+        if parameter is not None:
+            observations = [item for item in observations if item["parameter"] == parameter]
+
+        latest_by_parameter: dict[str, tuple[datetime, list[dict[str, Any]]]] = {}
+        for item in observations:
+            observation = Observation.from_dict(item)
+            time_basis = "measurement_time" if observation.measurement_time else "recording_time"
+            ordering_time = observation.measurement_time or observation.recording_time
+            if ordering_time.tzinfo is None:
+                ordering_time = ordering_time.replace(tzinfo=UTC)
+            ordering_time = ordering_time.astimezone(UTC)
+            projected = {
+                **item,
+                "ordering_timestamp": ordering_time.isoformat(),
+                "time_basis": time_basis,
+            }
+
+            current = latest_by_parameter.get(observation.parameter)
+            if current is None or ordering_time > current[0]:
+                latest_by_parameter[observation.parameter] = (ordering_time, [projected])
+            elif ordering_time == current[0]:
+                current[1].append(projected)
+
+        return [
+            item
+            for key in sorted(latest_by_parameter)
+            for item in sorted(
+                latest_by_parameter[key][1], key=lambda observation: observation["observation_id"]
+            )
+        ]
+
     async def update_observation(
         self, user_id: str | None, observation_id: str, changes: dict[str, Any]
     ) -> dict[str, Any]:
