@@ -106,6 +106,97 @@ async def test_partial_observations_preserve_provenance_and_history(
 
 
 @pytest.mark.asyncio
+async def test_latest_observations_use_utc_ordering_preserve_ties_and_context(
+    tmp_path: Path,
+) -> None:
+    hass, application = await _application(tmp_path)
+    try:
+        tank = await application.create_tank("user-1", "Veril")
+        location = await application.create_location("user-1", tank["tank_id"], "Display")
+        older = await application.record_observation(
+            "user-1",
+            tank_id=tank["tank_id"],
+            parameter="alkalinity",
+            reported_value=7.1,
+            unit="dKH",
+            measurement_time="2026-10-07T11:59:00+00:00",
+        )
+        naive_tie = await application.record_observation(
+            "user-1",
+            tank_id=tank["tank_id"],
+            parameter="alkalinity",
+            reported_value=7.2,
+            unit="dKH",
+            qualifier="<",
+            measurement_time="2026-10-07T12:00:00",
+            location_id=location["location_id"],
+            method_id="salifert",
+            instrument_id="kit-1",
+        )
+        offset_tie = await application.record_observation(
+            "user-1",
+            tank_id=tank["tank_id"],
+            parameter="alkalinity",
+            reported_value=7.3,
+            unit="dKH",
+            measurement_time="2026-10-07T13:00:00+01:00",
+        )
+        calcium = await application.record_observation(
+            "user-1",
+            tank_id=tank["tank_id"],
+            parameter="calcium",
+            reported_value=425,
+            unit="mg/L",
+        )
+
+        latest = await application.latest_observations(tank["tank_id"])
+        by_id = {item["observation_id"]: item for item in latest}
+
+        assert older["observation_id"] not in by_id
+        assert set(by_id) == {
+            naive_tie["observation_id"],
+            offset_tie["observation_id"],
+            calcium["observation_id"],
+        }
+        assert by_id[naive_tie["observation_id"]]["measurement_time"] == "2026-10-07T12:00:00"
+        assert (
+            by_id[naive_tie["observation_id"]]["ordering_timestamp"] == "2026-10-07T12:00:00+00:00"
+        )
+        assert by_id[naive_tie["observation_id"]]["time_basis"] == "measurement_time"
+        assert (
+            by_id[offset_tie["observation_id"]]["ordering_timestamp"] == "2026-10-07T12:00:00+00:00"
+        )
+        assert by_id[naive_tie["observation_id"]]["reported_value"] == 7.2
+        assert by_id[naive_tie["observation_id"]]["source"] == "manual"
+        assert "valid" not in by_id[naive_tie["observation_id"]]
+        assert "validity" not in by_id[naive_tie["observation_id"]]
+        assert by_id[naive_tie["observation_id"]]["qualifier"] == "<"
+        assert by_id[naive_tie["observation_id"]]["location_id"] == location["location_id"]
+        assert by_id[naive_tie["observation_id"]]["method_id"] == "salifert"
+        assert by_id[naive_tie["observation_id"]]["instrument_id"] == "kit-1"
+        assert by_id[calcium["observation_id"]]["time_basis"] == "recording_time"
+        assert by_id[calcium["observation_id"]]["ordering_timestamp"].endswith("+00:00")
+
+        filtered = await application.latest_observations(tank["tank_id"], "calcium")
+        assert [item["observation_id"] for item in filtered] == [calcium["observation_id"]]
+        assert await application.latest_observations(tank["tank_id"], "phosphate") == []
+    finally:
+        await hass.async_stop()
+
+
+@pytest.mark.asyncio
+async def test_latest_observations_return_empty_for_tank_without_observations(
+    tmp_path: Path,
+) -> None:
+    hass, application = await _application(tmp_path)
+    try:
+        tank = await application.create_tank("user-1", "Veril")
+        assert await application.latest_observations(tank["tank_id"]) == []
+    finally:
+        await hass.async_stop()
+
+
+@pytest.mark.asyncio
 async def test_observation_correction_preserves_identity_and_delete_dependencies(
     tmp_path: Path,
 ) -> None:

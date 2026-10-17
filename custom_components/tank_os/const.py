@@ -16,6 +16,7 @@ SERVICE_DELETE_LOCATION = "delete_location"
 SERVICE_START_SESSION = "start_measurement_session"
 SERVICE_RECORD_OBSERVATION = "record_observation"
 SERVICE_LIST_OBSERVATIONS = "list_observations"
+SERVICE_LATEST_OBSERVATIONS = "latest_observations"
 SERVICE_UPDATE_OBSERVATION = "update_observation"
 SERVICE_DELETE_OBSERVATION = "delete_observation"
 

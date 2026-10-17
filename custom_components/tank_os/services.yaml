@@ -108,6 +108,21 @@ list_observations:
       required: false
       selector:
         text:
+latest_observations:
+  name: Get latest observations
+  description: Return the latest observation per parameter without hiding provenance. Timestamps without a timezone are ordered as UTC.
+  fields:
+    tank_id:
+      name: Tank ID
+      required: true
+      selector:
+        text:
+    parameter:
+      name: Parameter
+      description: Optionally return results for one parameter only.
+      required: false
+      selector:
+        text:
 start_measurement_session:
   name: Start measurement session
   description: Start a partial or complete manual measurement session.
